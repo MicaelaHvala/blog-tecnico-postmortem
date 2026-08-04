@@ -1,1 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Post-mortem: error en un formulario de contacto</title>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #f4f6f8;
+      color: #263238;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    header {
+      background-color: #172a3a;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 15px;
+      font-size: 38px;
+    }
+
+    header p {
+      margin: 0;
+      color: #cfd8dc;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background-color: white;
+      margin-bottom: 25px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #1565c0;
+      border-bottom: 2px solid #e3f2fd;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      color: #37474f;
+    }
+
+    .resumen {
+      border-left: 5px solid #1565c0;
+      background-color: #eaf4ff;
+    }
+
+    .resultado {
+      border-left: 5px solid #2e7d32;
+      background-color: #edf7ee;
+    }
+
+    .reflexion {
+      border-left: 5px solid #ef6c00;
+      background-color: #fff4e8;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    footer {
+      background-color: #172a3a;
+      color: white;
+      text-align: center;
+      padding: 25px 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Post-mortem: error en un formulario de contacto</h1>
+    <p>Análisis constructivo de un incidente y sus aprendizajes</p>
+  </header>
+
+  <main>
+
+    <section class="resumen">
+      <h2>Resumen ejecutivo</h2>
+      <p>
+        Un formulario de contacto mostraba el mensaje “Enviado correctamente”,
+        pero las consultas no se registraban. El problema fue detectado,
+        investigado y corregido. También se incorporaron controles para evitar
+        que un incidente similar vuelva a ocurrir.
+      </p>
+    </section>
+
+    <section>
+      <h2>1. Contexto</h2>
+      <p>
+        El incidente ocurrió en el sitio web de un pequeño emprendimiento que
+        utilizaba un formulario para recibir consultas de potenciales clientes.
+        Este canal era importante porque permitía solicitar información sobre
+        productos, precios y disponibilidad.
+      </p>
+
+      <p>
+        El objetivo del proyecto era ofrecer una forma rápida y sencilla de
+        comunicación. Sin embargo, durante una revisión se descubrió que el
+        formulario confirmaba el envío sin comprobar si la información había
+        sido registrada correctamente.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Problema</h2>
+      <p>
+        Las personas completaban el formulario y veían el mensaje “Enviado
+        correctamente”, pero la consulta no llegaba al sistema.
+      </p>
+
+      <h3>Impacto</h3>
+      <ul>
+        <li>Se perdieron posibles consultas de clientes.</li>
+        <li>Las personas recibieron una confirmación incorrecta.</li>
+        <li>El equipo no pudo responder los mensajes.</li>
+        <li>Se afectó la confianza en el canal de contacto.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Investigación y causa</h2>
+      <p>
+        Para investigar el incidente se reprodujo el proceso completo:
+        completar el formulario, enviarlo y verificar si la información se
+        almacenaba.
+      </p>
+
+      <p>
+        Se identificó que el mensaje de confirmación aparecía automáticamente
+        después de presionar el botón, sin validar el resultado real del envío.
+        Por eso, la página informaba que la operación había sido exitosa incluso
+        cuando se producía un error.
+      </p>
+
+      <p>
+        El análisis se realizó sin buscar responsables individuales. La causa
+        estuvo relacionada con la falta de una validación técnica y de una
+        prueba completa del recorrido del usuario antes de publicar el
+        formulario.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Acciones realizadas</h2>
+
+      <h3>Acciones correctivas</h3>
+      <ul>
+        <li>Se corrigió la validación del envío.</li>
+        <li>El mensaje de éxito aparece únicamente cuando la operación finaliza correctamente.</li>
+        <li>Se agregó un mensaje claro para los casos de error.</li>
+        <li>Se realizaron pruebas con datos válidos, inválidos y campos vacíos.</li>
+      </ul>
+
+      <h3>Acciones preventivas</h3>
+      <ul>
+        <li>Crear una lista de verificación antes de publicar formularios.</li>
+        <li>Probar todo el recorrido desde la perspectiva del usuario.</li>
+        <li>Registrar los errores para facilitar futuras investigaciones.</li>
+        <li>Revisar los cambios mediante commits y Pull Requests.</li>
+        <li>Documentar los incidentes y las soluciones aplicadas.</li>
+      </ul>
+    </section>
+
+    <section class="resultado">
+      <h2>5. Resultado</h2>
+      <p>
+        Después de implementar la corrección, el formulario fue probado
+        nuevamente. Las consultas comenzaron a registrarse correctamente y el
+        mensaje de confirmación quedó asociado al resultado real del envío.
+      </p>
+
+      <p>
+        La solución permitió recuperar la confiabilidad del canal y dejó un
+        proceso de control más claro para futuras publicaciones.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Aprendizajes</h2>
+      <ul>
+        <li>Una confirmación visual no garantiza que una operación se haya completado.</li>
+        <li>Las pruebas deben incluir todo el recorrido realizado por el usuario.</li>
+        <li>Los errores deben analizarse como oportunidades de mejora.</li>
+        <li>La documentación ayuda a evitar que el conocimiento quede en una sola persona.</li>
+        <li>El control de versiones permite registrar y revisar cada cambio.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Control de versiones</h2>
+      <p>
+        El proyecto fue documentado en un repositorio público de GitHub. Los
+        cambios se registraron mediante commits para conservar la trazabilidad
+        del proceso.
+      </p>
+
+      <ul>
+        <li>Creación inicial del repositorio y del archivo README.</li>
+        <li>Creación de la estructura inicial del blog.</li>
+        <li>Incorporación del análisis post-mortem.</li>
+        <li>Revisión y mejora del contenido a partir del feedback.</li>
+      </ul>
+    </section>
+
+    <section class="reflexion">
+      <h2>8. Reflexión sobre el feedback radicalmente sincero</h2>
+      <p>
+        Durante la revisión se señaló que la primera versión explicaba el
+        problema con términos poco claros y no mostraba suficientemente el
+        impacto para el usuario.
+      </p>
+
+      <p>
+        Recibí esa devolución enfocándome en mejorar el trabajo y no como una
+        crítica personal. Como resultado, simplifiqué el lenguaje, expliqué las
+        consecuencias del incidente y organicé las acciones correctivas y
+        preventivas.
+      </p>
+
+      <p>
+        Este proceso me permitió comprender que un feedback sincero, cuando es
+        específico, respetuoso y está acompañado por propuestas de mejora,
+        ayuda a conseguir un resultado más claro y profesional.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Trabajo final — Blog técnico y análisis post-mortem</p>
+    <p>Micaela Hvala · 2026</p>
+  </footer>
+
+</body>
+</html>
